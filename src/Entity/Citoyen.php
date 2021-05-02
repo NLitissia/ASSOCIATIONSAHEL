@@ -57,10 +57,11 @@ class Citoyen
      */
     private $mariee;
 
+
     /**
-     * @ORM\ManyToOne(targetEntity=Adrum::class, inversedBy="citoyens")
+     * @ORM\ManyToOne(targetEntity=Famille::class, inversedBy="citoyens")
      */
-    private $adrum;
+    private $famille;
 
     public function getId(): ?int
     {
@@ -163,14 +164,14 @@ class Citoyen
         return $this;
     }
 
-    public function getAdrum(): ?Adrum
+    public function getFamille(): ?Famille
     {
-        return $this->adrum;
+        return $this->famille->getNom();
     }
 
-    public function setAdrum(?Adrum $adrum): self
+    public function setFamille(?Famille $famille): self
     {
-        $this->adrum = $adrum;
+        $this->famille = $famille;
 
         return $this;
     }

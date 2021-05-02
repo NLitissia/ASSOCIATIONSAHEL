@@ -29,9 +29,15 @@ class Adrum
      */
     private $citoyens;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Famille::class, mappedBy="adrum")
+     */
+    private $familles;
+
     public function __construct()
     {
         $this->citoyens = new ArrayCollection();
+        $this->familles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +81,36 @@ class Adrum
             // set the owning side to null (unless already changed)
             if ($citoyen->getAdrum() === $this) {
                 $citoyen->setAdrum(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Famille[]
+     */
+    public function getFamilles(): Collection
+    {
+        return $this->familles;
+    }
+
+    public function addFamille(Famille $famille): self
+    {
+        if (!$this->familles->contains($famille)) {
+            $this->familles[] = $famille;
+            $famille->setAdrum($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFamille(Famille $famille): self
+    {
+        if ($this->familles->removeElement($famille)) {
+            // set the owning side to null (unless already changed)
+            if ($famille->getAdrum() === $this) {
+                $famille->setAdrum(null);
             }
         }
 
